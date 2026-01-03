@@ -1,0 +1,22 @@
+services:
+  sms-gateway:
+    image: sms-gateway
+    container_name: sms-gateway
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      MODEM_URL: "http://192.168.8.1"
+      MODEM_USERNAME: "admin"
+      MODEM_PASSWORD: "${E3372_ADMIN_PASSWORD}"
+      API_TOKEN: "${API_TOKEN}"
+      POLL_SECONDS: "30"
+      WEBHOOK_URL: "http://homeassistant.local:8123/api/webhook/lte_sms"
+      WEBHOOK_TOKEN: "${HA_WEBHOOK_TOKEN}"
+      PROCESS_READ_MESSAGES: "1"
+      ALLOWED_SENDERS: "${ALLOWED_SENDERS:-}"
+      LOG_LEVEL: "INFO"
+      ALERTMANAGER_PHONE: "${ALERTMANAGER_PHONE:-}"
+      ALERTMANAGER_PHONE_CRITICAL: "${ALERTMANAGER_PHONE_CRITICAL:-}"
+      ALERTMANAGER_PHONE_WARNING: "${ALERTMANAGER_PHONE_WARNING:-}"
+      TZ: "Europe/Oslo"
